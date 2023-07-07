@@ -68,9 +68,12 @@ class Client:
 async def main():
     client = Client(SERVER_URL)
     while True:
-        tasks = await client.get_all_tasks()
-        for task in tasks:
-            await client.execute_task(task)
+        try:
+            tasks = await client.get_all_tasks()
+            for task in tasks:
+                await client.execute_task(task)
+        except:
+            traceback.print_exc()
         await asyncio.sleep(10)
 
 if __name__ == "__main__":

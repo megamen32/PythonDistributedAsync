@@ -26,20 +26,6 @@ async def create_task(
     task = Task.create_task(func, execution_time, None,*args, **kwargs)
     return {"message": "Task created", "task_uuid": task.uuid}
 
-@app.get("/get_task_result/{uuid}")
-async def get_task_result(uuid: str):
-    task = Task.get(Task.uuid == uuid)
-    try:
-         await task.wait_for_completion(timeout=30)
-    except TimeoutError:
-        return {"status":task.status}
-    if task.status == TaskStates.DONE.name:
-        return {"result": dill.loads(task.result)}
-    elif task.status == TaskStates.FAILED.name:
-        try:
-            return {"error": task.error_message,"result":dill.loads(task.result)}
-        except:
-            return {"error": task.error_message, "result": task.result}
 
 
 
@@ -67,6 +53,21 @@ from typing import Optional
 class TaskResult(BaseModel):
     message: str
     task_id: int
+@app.get("/get_task_result/{uuid}")
+async def get_task_result(uuid: str):
+    task = Task.get(Task.uuid == uuid)
+    try:
+         await task.wait_for_completion(timeout=30)
+    except TimeoutError:
+        return {"status":task.status}
+    task = Task.get(Task.uuid == uuid)
+    if task.status == TaskStates.DONE.name:
+        return {"result": dill.loads(task.result)}
+    elif task.status == TaskStates.FAILED.name:
+        try:
+            return {"error": task.error_message,"result":dill.loads(task.result)}
+        except:
+            return {"error": task.error_message, "result": task.result}
 
 @app.post("/set_task_result/{uuid}", response_model=TaskResult)
 async def set_task_result(uuid: str, result: str = Body(default=...), error_message: Optional[str] = Body(default=None)):
@@ -76,7 +77,7 @@ async def set_task_result(uuid: str, result: str = Body(default=...), error_mess
         task.error_message = error_message
     else:
         task.status = TaskStates.DONE.name
-        task.result =result
+        task.result = base64.b64decode(result) # this is now ready for dill.loads when retrieved
     task.save()
     return TaskResult(message="Task result updated", task_id=task.id)
 

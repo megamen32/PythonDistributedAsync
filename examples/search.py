@@ -51,13 +51,7 @@ class TaskRunner:
 if __name__ == "__main__":
     runner = TaskRunner("http://localhost:8001")
     task_uuid = runner.create_task(opennet_news, None,'https://www.opennet.ru/opennews/')
-    task_uuid1 = runner.create_task(opennet_news, None,'https://www.opennet.ru/opennews/')
-    task_uuid2 = runner.create_task(opennet_news, None,'https://www.opennet.ru/opennews/')
-    task_uuid3 = runner.create_task(opennet_news, None,'https://www.opennet.ru/opennews/')
-    task_uuid4 = runner.create_task(opennet_news, None,'https://www.opennet.ru/opennews/')
-    task_uuid5 = runner.create_task(opennet_news, None,'https://www.opennet.ru/opennews/')
+
     response = runner.wait_for_result(task_uuid)
 
-    print(response, response.text)
-    response = runner.wait_for_result(task_uuid5)
     print(response, response.text)
