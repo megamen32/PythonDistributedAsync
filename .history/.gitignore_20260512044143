@@ -1,0 +1,17 @@
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+.env
+.idea/
+.vscode/
+tasks.db
+*.sqlite
+*.sqlite3
+.DS_Store
+.pytest_cache/
+.coverage
+dist/
+build/
+.history/client/client_20260512043851.py

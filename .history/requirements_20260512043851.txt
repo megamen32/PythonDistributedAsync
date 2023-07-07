@@ -1,0 +1,14 @@
+<<<<<<< HEAD
+peewee~=3.16.2
+dill~=0.3.6
+requests~=2.31.0
+uvicorn~=0.22.0
+fastapi~=0.99.1
+=======
+fastapi~=0.99.1
+uvicorn~=0.22.0
+peewee~=3.16.2
+dill~=0.3.6
+requests~=2.31.0
+lxml~=4.9.3
+>>>>>>> 4458406 (Improve README and project structure)
