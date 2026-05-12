@@ -56,7 +56,7 @@ The server owns the task table. Workers poll the server, lock a task by moving i
 ## Installation
 
 ```bash
-git clone <your-repo-url>
+git clone https://github.com/megamen32/PythonDistributedAsync
 cd PythonDistributedAsync
 python -m venv .venv
 source .venv/bin/activate
